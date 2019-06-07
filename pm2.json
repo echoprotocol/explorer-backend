@@ -1,0 +1,12 @@
+{
+	"apps": [
+		{
+			"name": "server",
+			"script": "npm run start:api",
+			"max_memory_restart": "2000M",
+			"env": {
+				"MODULE": "api"
+			}
+		}
+	]
+}

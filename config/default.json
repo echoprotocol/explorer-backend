@@ -1,0 +1,14 @@
+{
+	"env": "development",
+	"traceApiRequests": true,
+	"cors": false,
+	"logger": {
+		"level": "trace"
+	},
+	"port": 3000,
+	"raven": {
+		"enabled": false,
+		"config": ""
+	},
+	"sessionSecret": "KB}3S}QBh]"
+}

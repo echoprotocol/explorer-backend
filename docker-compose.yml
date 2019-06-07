@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+
+  mongodb:
+    image: mongo:latest
+    container_name: "656.explorer.server.mongodb"
+    environment:
+      - MONGO_DATA_DIR=/data/mongo-db
+    command: mongod --smallfiles
+    logging:
+      driver: none
+    ports:
+      - ${EXPORT_HOST_DB}:26562:27017
+
+  backend.api:
+    image: 656.explorer.server.api
+    command: ["./wait-for-it/wait-for-it.sh", "mongodb:27017", "--", "npm", "run", "start"]
+    environment:
+      - NODE_ENV=production
+      - NODE_APP_INSTANCE=$NODE_APP_INSTANCE
+      - APP_SESSION_SECRET=$APP_SESSION_SECRET
+    container_name: "656.explorer.server.api"
+    ports:
+      - ${EXPORT_HOST_API}:26563:3000
+    restart: always
+    depends_on:
+      - mongodb
+    volumes:
+      - cookie:/app/.cookies
+
+volumes:
+  cookie:
