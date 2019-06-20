@@ -1,8 +1,8 @@
 import { Logger, ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus } from '@nestjs/common';
 import { Request, Response } from 'express-serve-static-core';
 
-import FormError from '../../errors/form.error';
 import { RavenService } from '../../services/raven.service';
+import PipeError from '../../errors/pipe.error';
 
 @Catch()
 export class ApiExceptionFilter implements ExceptionFilter {
@@ -15,7 +15,7 @@ export class ApiExceptionFilter implements ExceptionFilter {
 		const response = ctx.getResponse();
 		const request = ctx.getRequest();
 
-		if (!(exception instanceof HttpException) || !(exception instanceof FormError)) {
+		if (!(exception instanceof HttpException)) {
 			this.sendError(request, response, new HttpException(
 				exception instanceof Error ? exception.message : 'Internal Server Error',
 				HttpStatus.INTERNAL_SERVER_ERROR,
@@ -26,7 +26,7 @@ export class ApiExceptionFilter implements ExceptionFilter {
 
 	}
 
-	private sendError(request: Request, response: Response, error: HttpException | FormError) {
+	private sendError(request: Request, response: Response, error: HttpException) {
 		this.logger.error(error.message);
 		this.ravenService.error(error.message, 'ApiExceptionFilter', {
 			method: request.method,
@@ -36,8 +36,7 @@ export class ApiExceptionFilter implements ExceptionFilter {
 		});
 
 		return response.status(error.getStatus()).json({
-			error: error instanceof FormError ? error.details : error.message,
-			status: error.getStatus(),
+			error: error instanceof PipeError ? error.details : error.message,
 		});
 	}
 }
