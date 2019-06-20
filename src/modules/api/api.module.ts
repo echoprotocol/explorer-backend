@@ -11,7 +11,9 @@ import { ContractService } from '../../services/contract.service';
 import { RavenService } from '../../services/raven.service';
 
 import { ApiInterceptor } from './api.interceptor';
+import { TransformInterceptor } from './transform.interceptor';
 import { ApiExceptionFilter } from './api.filter';
+import { ContractEntity } from './schema/serializer.contract.schema';
 
 @Module({
 	imports:[
@@ -26,9 +28,18 @@ import { ApiExceptionFilter } from './api.filter';
 		ContractService,
 		RavenService,
 		Logger,
+		ContractEntity,
+		{
+			provide: 'ISerializerContract',
+			useClass: ContractEntity,
+		},
 		{
 			provide: APP_INTERCEPTOR,
 			useClass: ApiInterceptor,
+		},
+		{
+			provide: APP_INTERCEPTOR,
+			useClass: TransformInterceptor,
 		},
 		{
 			provide: APP_FILTER,

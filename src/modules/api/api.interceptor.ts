@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import * as config from 'config';
 import { Request } from 'express-serve-static-core';
 
-import FormError from '../../errors/form.error';
+import PipeError from '../../errors/pipe.error';
 
 @Injectable()
 export class ApiInterceptor implements NestInterceptor {
@@ -17,7 +17,7 @@ export class ApiInterceptor implements NestInterceptor {
 		this.traceRequest(request, request.form);
 
 		if (!request.form.isValid) {
-			throw new FormError(request.form.getErrors());
+			throw new PipeError(request.form.getErrors());
 		}
 
 		return next.handle();

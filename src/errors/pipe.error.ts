@@ -6,7 +6,7 @@ declare type FormErrorDetail = {
 	context: { [key: string]: string | number },
 };
 
-export default class FormError extends BadRequestException {
+export default class PipeError extends BadRequestException {
 	private pDetails: FormErrorDetail[] = [];
 
 	constructor(details?: FormErrorDetail[]) {

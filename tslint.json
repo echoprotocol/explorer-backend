@@ -5,6 +5,11 @@
     "no-unused-expression": true
   },
   "rules": {
+    "variable-name": [true,
+      "check-format",
+      "allow-snake-case",
+      "allow-leading-underscore"
+    ],
     "quotemark": [true, "single"],
     "member-access": [false],
     "ordered-imports": [false],
