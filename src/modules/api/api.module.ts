@@ -1,4 +1,4 @@
-import { Module, Logger } from '@nestjs/common';
+import { Module, Logger, ClassSerializerInterceptor } from '@nestjs/common';
 import { APP_INTERCEPTOR, APP_FILTER } from '@nestjs/core';
 
 import ContractModel from '../../models/contract.model';
@@ -7,13 +7,17 @@ import { ContractController } from './controllers/contract.controller';
 
 import { ContractRepository } from '../../repositories/contract.repository';
 
+import { ContractHelper } from '../../helpers/contract.helper';
+
+import { ContractSerializer } from '../../serializers/contract.serializer';
+
 import { ContractService } from '../../services/contract.service';
+import { GraphQLService } from '../../services/graphql.service';
 import { RavenService } from '../../services/raven.service';
 
-import { ApiInterceptor } from './api.interceptor';
+import { LoggerInterceptor } from './logger.interceptor';
 import { TransformInterceptor } from './transform.interceptor';
-import { ApiExceptionFilter } from './api.filter';
-import { ContractEntity } from './schema/serializer.contract.schema';
+import { ApiExceptionFilter } from './exception.filter';
 
 @Module({
 	imports:[
@@ -25,21 +29,29 @@ import { ContractEntity } from './schema/serializer.contract.schema';
 	providers: [
 		ContractRepository,
 
+		ContractHelper,
+
 		ContractService,
+		GraphQLService,
 		RavenService,
-		Logger,
-		ContractEntity,
+
 		{
-			provide: 'ISerializerContract',
-			useClass: ContractEntity,
+			provide: 'IContractSerializer',
+			useClass: ContractSerializer,
 		},
+
+		Logger,
 		{
 			provide: APP_INTERCEPTOR,
-			useClass: ApiInterceptor,
+			useClass: LoggerInterceptor,
 		},
 		{
 			provide: APP_INTERCEPTOR,
 			useClass: TransformInterceptor,
+		},
+		{
+			provide: APP_INTERCEPTOR,
+			useClass: ClassSerializerInterceptor,
 		},
 		{
 			provide: APP_FILTER,

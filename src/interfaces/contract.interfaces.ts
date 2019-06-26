@@ -1,5 +1,10 @@
+import { Document } from 'mongoose';
 
-export interface ISerializerContract<T> {
+export interface IContractModel extends Document {
+	readonly name: string;
+}
+
+export interface IContractSerializer<T> {
 	_id: string;
 	name: string;
 	description: string;

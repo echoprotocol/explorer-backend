@@ -3,13 +3,13 @@ import { InjectModel } from '@nestjs/mongoose';
 
 import { BaseMongoRepository } from './base-mongo.repository';
 
-import { Contract } from '../interfaces/model.interfaces';
+import { IContractModel } from '../interfaces/contract.interfaces';
 import { RavenService } from '../services/raven.service';
 
 export class ContractRepository extends BaseMongoRepository {
 
 	constructor(
-		@InjectModel('Contract') private readonly contractModel: Model<Contract>,
+		@InjectModel('Contract') private readonly contractModel: Model<IContractModel>,
 		private readonly pRavenService: RavenService,
 	) {
 		super(pRavenService, contractModel);
