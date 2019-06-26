@@ -1,37 +1,43 @@
 import {
-	ClassSerializerInterceptor,
 	Controller,
-	Get,
-	Param,
-	Req,
-	UseInterceptors,
+	Get, Post,
+	Req, Body, Param,
 	UsePipes,
+	Inject,
 } from '@nestjs/common';
 
-import { Contract } from '../../../interfaces/model.interfaces';
+import { ContractValidator } from '../validators/contract.validator';
+import { setValidationPipe } from '../validation.pipe';
+
+import { IContractModel, IContractSerializer } from '../../../interfaces/contract.interfaces';
 
 import { ContractService } from '../../../services/contract.service';
 
-import { ApiPipe } from '../api.pipe';
-import { ContractIdSchema } from '../schema/joi.contract.schema';
-import { ISerializerContract } from '../../../interfaces/serializer.contract.interface';
-import { ContractEntity } from '../schema/serializer.contract.schema';
+import { ContractSerializer } from '../../../serializers/contract.serializer';
 
 @Controller('contracts')
-@UseInterceptors(ClassSerializerInterceptor)
 export class ContractController {
 
-	constructor(private readonly contractService: ContractService) {}
+	constructor(
+		private readonly contractService: ContractService,
+		@Inject('IContractSerializer') private contractSerializer: IContractSerializer<ContractSerializer>,
+	) {}
 
-	@Get('all')
-	getContracts(@Req() { form }): Promise<Contract[]> {
-		return this.contractService.getContracts(form);
+	@Post('abi')
+	@UsePipes(setValidationPipe({
+		id: ContractValidator.contractIdSchema(),
+		abi: ContractValidator.contractAbiSchema(),
+	}))
+	async setContractAbi(@Body() { id, abi }): Promise<IContractSerializer<ContractSerializer>> {
+		const contract = await this.contractService.setContractAbi(id, abi);
+		return this.contractSerializer.getInstance(contract);
 	}
 
 	@Get(':id')
-	@UsePipes(new ApiPipe(ContractIdSchema))
-	getOneContract(@Param('id') id): Promise<ISerializerContract<ContractEntity>> {
-		return this.contractService.getOneContact(id);
+	@UsePipes(setValidationPipe(ContractValidator.contractIdSchema()))
+	async getOneContract(@Param('id') id): Promise<IContractSerializer<ContractSerializer>> {
+		const contract = await this.contractService.getOneContact(id);
+		return this.contractSerializer.getInstance(contract);
 	}
 
 }

@@ -1,8 +1,8 @@
 import { Logger, ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus } from '@nestjs/common';
 import { Request, Response } from 'express-serve-static-core';
 
+import ValidationError from '../../errors/validation.error';
 import { RavenService } from '../../services/raven.service';
-import PipeError from '../../errors/pipe.error';
 
 @Catch()
 export class ApiExceptionFilter implements ExceptionFilter {
@@ -27,8 +27,9 @@ export class ApiExceptionFilter implements ExceptionFilter {
 	}
 
 	private sendError(request: Request, response: Response, error: HttpException) {
-		this.logger.error(error.message);
-		this.ravenService.error(error.message, 'ApiExceptionFilter', {
+		const message = JSON.stringify(error instanceof ValidationError ? error.details : error.message);
+		this.logger.error(message);
+		this.ravenService.error(new Error(message), 'ApiExceptionFilter', {
 			method: request.method,
 			url: request.url,
 			form: request.form,
@@ -36,7 +37,8 @@ export class ApiExceptionFilter implements ExceptionFilter {
 		});
 
 		return response.status(error.getStatus()).json({
-			error: error instanceof PipeError ? error.details : error.message,
+			error: error instanceof ValidationError ? error.details : error.message,
+			status: error.getStatus(),
 		});
 	}
 }

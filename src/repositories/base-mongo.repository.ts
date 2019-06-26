@@ -47,7 +47,7 @@ export class BaseMongoRepository {
 	 * @param {Object} [options] optional
 	 * @return {Promise.<MongooseDocument>}
 	 */
-	findById(id, projection, options) {
+	findById(id, projection?, options?) {
 		if (typeof id === 'undefined') {
 			id = null;
 		}
@@ -230,7 +230,7 @@ export class BaseMongoRepository {
 	 * @param {Object} [options]
 	 * @return {Promise.<Number>}
 	 */
-	async update(conditions, doc, options) {
+	async update(conditions, doc, options?) {
 		try {
 			return await this.model.update(conditions, doc, options);
 		} catch (error) {
@@ -316,7 +316,7 @@ export class BaseMongoRepository {
 	 * @param {Boolean} [options.new]
 	 * @return {Promise<MongooseDocument>}
 	 */
-	async findByIdAndUpdate(id, update, options) {
+	async findByIdAndUpdate(id, update, options?) {
 		try {
 			return await this.model.findByIdAndUpdate(id, update, options);
 		} catch (error) {
@@ -417,7 +417,7 @@ export class BaseMongoRepository {
 	 * @param {boolean} [options.new] if true: returns updated object (default - false)
 	 * @return {Promise<MongooseDocument>}
 	 */
-	async findOneAndUpdate(conditions, update, options) {
+	async findOneAndUpdate(conditions, update, options?) {
 		try {
 			return await this.model.findOneAndUpdate(conditions, update, options);
 		} catch (error) {

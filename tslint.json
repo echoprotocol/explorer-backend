@@ -16,7 +16,7 @@
     "max-line-length": [true, 150],
     "member-ordering": [false],
     "interface-name": [false],
-    "arrow-parens": false,
+    "ter-arrow-parens": [true, "always"],
     "object-literal-sort-keys": false,
     "ter-indent": [true, "tab", {
 		"SwitchCase": 1

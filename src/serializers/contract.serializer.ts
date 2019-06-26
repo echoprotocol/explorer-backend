@@ -1,7 +1,8 @@
 import { Exclude } from 'class-transformer';
-import { ISerializerContract } from '../../../interfaces/serializer.contract.interface';
 
-export class ContractEntity implements ISerializerContract<ContractEntity> {
+import { IContractSerializer } from '../interfaces/contract.interfaces';
+
+export class ContractSerializer implements IContractSerializer<ContractSerializer> {
 	@Exclude()
 	_id: string;
 	name: string;
@@ -22,7 +23,7 @@ export class ContractEntity implements ISerializerContract<ContractEntity> {
 	@Exclude()
   	updatedAt: object;
 
-	getInstance(partial: Partial<ContractEntity>) {
+	getInstance(partial: Partial<ContractSerializer>) {
 		return Object.assign(this, partial);
 	}
 
