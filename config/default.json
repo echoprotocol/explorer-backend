@@ -10,5 +10,6 @@
 		"enabled": false,
 		"config": ""
 	},
+	"url": "wss://testnet.echo-dev.io/ws",
 	"sessionSecret": "KB}3S}QBh]"
 }

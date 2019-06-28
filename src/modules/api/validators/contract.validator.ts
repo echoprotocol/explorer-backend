@@ -2,12 +2,16 @@ import * as Joi from '@hapi/joi';
 
 import { BaseValidator } from './base.validator';
 
-import { GLOBAL_CONSTANS } from '../../../constants/global.constans';
+import { CONTRACT_PREFIX, ACCOUNT_PREFIX } from '../../../constants/global.constans';
 
 export class ContractValidator extends BaseValidator {
 
 	static contractIdSchema(): object {
-		return Joi.string().required().regex(new RegExp(`^${GLOBAL_CONSTANS.CONTRACT_PREFIX}[0-9]+$`), 'contract id');
+		return Joi.string().required().regex(new RegExp(`^${CONTRACT_PREFIX}[0-9]+$`), 'contract id');
+	}
+
+	static accountIdShema() {
+		return Joi.string().required().regex(new RegExp(`^${ACCOUNT_PREFIX}[0-9]+$`), 'account id');
 	}
 
 	static contractAbiSchema(): object {
@@ -36,6 +40,15 @@ export class ContractValidator extends BaseValidator {
 			constant: Joi.boolean(),
 			anonymous: Joi.boolean(),
 		})).min(1);
+	}
+
+	static likedContractSchema(): object {
+		return Joi.object().keys({
+			signature: Joi.string().required(),
+			message: Joi.string().required(),
+			contractId: ContractValidator.contractIdSchema(),
+			accountId: ContractValidator.accountIdShema(),
+		});
 	}
 
 }

@@ -4,6 +4,7 @@ declare module 'config' {
 	export const traceApiRequests: boolean;
 	export const port: number;
 	export const sessionSecret: string;
+	export const url: string;
 	export const logger: {
 		level: string;
 	};

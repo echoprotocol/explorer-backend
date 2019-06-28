@@ -10,6 +10,7 @@ const contractSchema = new mongoose.Schema({
 	abi: { type: Array },
 	compiler_version: { type: String },
 	verified: { type: Boolean, default: false },
+	users_has_liked: { type: [String], default: [] },
 }, {
 	timestamps: true,
 });
