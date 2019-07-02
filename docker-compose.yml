@@ -22,7 +22,7 @@ services:
     depends_on:
       - explorer.mongodb
     ports:
-      - 127.0.0.1:26563:3000
+      - 26563:3000
 
 volumes:
   mongodb:
