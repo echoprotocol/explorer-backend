@@ -41,6 +41,13 @@ export class ContractValidator extends BaseValidator {
 		})).min(1);
 	}
 
+	static contractInputsSchema(): object {
+		return Joi.array().items(Joi.object({
+			arg: Joi.string().required(),
+			type: Joi.string().required(),
+		}));
+	}
+
 	static updateContractSchema(): object {
 		return Joi.object().keys({
 			signature: Joi.string().required(),

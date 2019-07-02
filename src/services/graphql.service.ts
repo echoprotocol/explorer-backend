@@ -1,21 +1,14 @@
-import { Injectable } from '@nestjs/common';
-import ApolloClient from 'apollo-boost';
-import fetcher from 'isomorphic-fetch';
+import { Injectable, Inject } from '@nestjs/common';
 
-import { HTTP_LINK, QUERY } from '../constants/graphql.constants';
+import { QUERY } from '../constants/graphql.constants';
+import { TOKEN_GRAPHQL } from '../constants/global.constans';
 
 @Injectable()
 export class GraphQLService {
-	private client;
 
-	constructor() {
-		this.client = new ApolloClient({
-			uri: HTTP_LINK,
-			fetchOptions: {
-				fetch: fetcher,
-			},
-		});
-	}
+	constructor(
+		@Inject(TOKEN_GRAPHQL) private client,
+	) {}
 
 	async getContractCreateOperation(id) {
 		const {

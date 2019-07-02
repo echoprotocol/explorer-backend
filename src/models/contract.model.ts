@@ -6,7 +6,7 @@ const contractSchema = new mongoose.Schema({
 	name: { type: String },
 	description: { type: String },
 	icon: { type: String },
-	code: { type: String },
+	source_code: { type: String },
 	abi: { type: Array },
 	compiler_version: { type: String },
 	verified: { type: Boolean, default: false },

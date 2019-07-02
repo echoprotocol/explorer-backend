@@ -2,20 +2,24 @@ import * as Joi from '@hapi/joi';
 
 export class BaseValidator {
 
-	static string(): object {
+	static string(): Joi {
 		return Joi.string();
 	}
 
-	static array(): object {
+	static array(): Joi {
 		return Joi.array();
 	}
 
-	static boolean(): object {
+	static boolean(): Joi {
 		return Joi.boolean();
 	}
 
-	static number(): object {
+	static number(): Joi {
 		return Joi.number();
+	}
+
+	static binary(): Joi {
+		return Joi.binary();
 	}
 
 }

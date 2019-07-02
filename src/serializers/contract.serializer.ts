@@ -8,7 +8,7 @@ export class ContractSerializer implements IContractSerializer<ContractSerialize
 	name: string;
 	description: string;
 	icon: string;
-	code: string;
+	source_code: string;
 	abi: string;
 	compiler_version: string;
 	verified: boolean;
@@ -23,8 +23,8 @@ export class ContractSerializer implements IContractSerializer<ContractSerialize
 	@Exclude()
   	updatedAt: object;
 
-	getInstance(partial: Partial<ContractSerializer>) {
-		return Object.assign(this, partial);
+	constructor(partial: Partial<ContractSerializer>) {
+		Object.assign(this, partial);
 	}
 
 }

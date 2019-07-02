@@ -9,7 +9,7 @@ export interface IContractSerializer<T> {
 	name: string;
 	description: string;
 	icon: string;
-	code: string;
+	source_code: string;
 	abi: string;
 	compiler_version: string;
 	verified: boolean;
@@ -17,6 +17,4 @@ export interface IContractSerializer<T> {
 	__v: number;
 	createdAt: object;
 	updatedAt: object;
-
-	getInstance(partial: Partial<T>): T;
 }

@@ -19,12 +19,10 @@ import { RavenService } from '../../services/raven.service';
 import { LoggerInterceptor } from './logger.interceptor';
 import { TransformInterceptor } from './transform.interceptor';
 import { ApiExceptionFilter } from './exception.filter';
-import { EchojsModule } from '../echojs/echojs.module';
 
 @Module({
 	imports:[
 		ContractModel,
-		EchojsModule.forRoot(config.url),
 	],
 	controllers: [
 		ContractController,

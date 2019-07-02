@@ -1,12 +1,9 @@
 import {
 	Controller,
-	Put,
-	Get, Body,
-	Param,
-	UsePipes,
-	Post,
-	Inject, UseInterceptors,
-	UploadedFile,
+	Get, Post, Put,
+	Body, Param, UploadedFile,
+	UsePipes, UseInterceptors,
+	Inject,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 
@@ -14,10 +11,10 @@ import { ContractValidator } from '../validators/contract.validator';
 import { setValidationPipe } from '../validation.pipe';
 import { IContractSerializer } from '../../../interfaces/contract.interfaces';
 import { ContractService } from '../../../services/contract.service';
-import { VerifyContractOwnerInterceptor } from '../verify.contract.owner.interceptor';
-import { LikedContractDto } from '../dtos/contract.dtos';
+import { LikedContractDto, SetContractAbiDto, VerifyContractDto } from '../dtos/contract.dtos';
 import { ContractSerializer } from '../../../serializers/contract.serializer';
 import { VerifySignatureInterceptor } from '../verify.signature.interceptor';
+import { VerifyContractOwnerInterceptor } from '../verify.contract.owner.interceptor';
 import { MulterService } from '../../../services/multer.service';
 
 @Controller('contracts')
@@ -28,16 +25,11 @@ export class ContractController {
 		@Inject('IContractSerializer') private contractSerializer: IContractSerializer<ContractSerializer>,
 	) {}
 
-	@Post('abi')
-	@UsePipes(setValidationPipe({
-		body: {
-			id: ContractValidator.contractIdSchema(),
-			abi: ContractValidator.contractAbiSchema(),
-		},
-	}))
-	async setContractAbi(@Body() { id, abi }): Promise<IContractSerializer<ContractSerializer>> {
-		const contract = await this.contractService.setContractAbi(id, abi);
-		return this.contractSerializer.getInstance(contract);
+	@Get(':id')
+	@UsePipes(setValidationPipe({ param: ContractValidator.contractIdSchema() }))
+	async getOneContract(@Param('id') id): Promise<IContractSerializer<ContractSerializer>> {
+		const contract = await this.contractService.getOneContact(id);
+		return new ContractSerializer(contract);
 	}
 
 	@Put(':id')
@@ -53,7 +45,7 @@ export class ContractController {
 		@Body() contractInfo: Object,
 	): Promise<IContractSerializer<ContractSerializer>>  {
 		const contract = await this.contractService.updateContract(id, file, contractInfo);
-		return this.contractSerializer.getInstance(contract);
+		return new ContractSerializer(contract);
 	}
 
 	@Post('like')
@@ -63,16 +55,36 @@ export class ContractController {
 	@UseInterceptors(VerifySignatureInterceptor)
 	async likeContract(@Body() likedContract: LikedContractDto) {
 		const contract = await this.contractService.likeContract(likedContract);
-		return this.contractSerializer.getInstance(contract);
+		return new ContractSerializer(contract);
 	}
 
-	@Get(':id')
+	@Post('abi')
 	@UsePipes(setValidationPipe({
-		param: ContractValidator.contractIdSchema(),
+		body: {
+			id: ContractValidator.contractIdSchema(),
+			abi: ContractValidator.contractAbiSchema(),
+		},
 	}))
-	async getOneContract(@Param('id') id): Promise<IContractSerializer<ContractSerializer>> {
-		const contract = await this.contractService.getOneContact(id);
-		return this.contractSerializer.getInstance(contract);
+	async setContractAbi(@Body() { id, abi }: SetContractAbiDto): Promise<IContractSerializer<ContractSerializer>> {
+		const contract = await this.contractService.setContractAbi(id, abi);
+		return new ContractSerializer(contract);
+	}
+
+	@Post('verify')
+	@UsePipes(setValidationPipe({
+		body: {
+			id: ContractValidator.contractIdSchema(),
+			name: ContractValidator.string().required(),
+			inputs: ContractValidator.contractInputsSchema(),
+			compiler_version: ContractValidator.string().required(),
+			source_code: ContractValidator.string().required(),
+		},
+	}))
+	async verifyContract(@Body() {
+		id, name, compiler_version, inputs, source_code,
+	}: VerifyContractDto): Promise<IContractSerializer<ContractSerializer>> {
+		const contract = await this.contractService.verifyContract(source_code, id, name, compiler_version, inputs);
+		return new ContractSerializer(contract);
 	}
 
 }

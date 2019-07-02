@@ -12,4 +12,7 @@ declare module 'config' {
 		enabled: boolean;
 		config: string;
 	};
+	export const echodb: {
+		http_url: string;
+	};
 }

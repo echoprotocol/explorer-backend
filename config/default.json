@@ -10,6 +10,9 @@
 		"enabled": false,
 		"config": ""
 	},
-	"url": "wss://testnet.echo-dev.io/ws",
-	"sessionSecret": "KB}3S}QBh]"
+	"sessionSecret": "KB}3S}QBh]",
+	"echodb": {
+        "http_url": "https://645-echodb.pixelplexlabs.com/graphql"
+    },
+	"url": "wss://testnet.echo-dev.io/ws"
 }

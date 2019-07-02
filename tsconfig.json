@@ -10,7 +10,10 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "typeRoots": ["./typing", "./node_modules/@types"],
-    "incremental": true
+    "incremental": true,
+    "paths": {
+      "echojs-lib": ["node_modules/echojs-lib"]
+    }
   },
   "exclude": ["node_modules", "**/*spec.ts"]
 }
