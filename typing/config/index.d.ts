@@ -1,4 +1,5 @@
 declare module 'config' {
+	export const dbUrl: string;
 	export const env: 'development' | 'production';
 	export const cors: boolean;
 	export const traceApiRequests: boolean;
