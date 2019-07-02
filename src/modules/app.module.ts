@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
+import * as config from 'config';
 import { MongooseModule } from '@nestjs/mongoose';
 
 import { ApiModule } from './api/api.module';
 
 @Module({
 	imports: [
-		MongooseModule.forRoot('mongodb://127.0.0.1:27017/explorer', { useNewUrlParser: true }),
+		MongooseModule.forRoot(config.dbUrl, { useNewUrlParser: true }),
 		ApiModule,
 	],
 })
