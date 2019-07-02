@@ -1,4 +1,5 @@
 import { DynamicModule } from '@nestjs/common';
+
 import { getEchojsProvider } from './echojs.provider';
 import { TOKEN_ECHOJS } from '../../constants/global.constans';
 

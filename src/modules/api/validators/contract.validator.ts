@@ -1,8 +1,7 @@
 import * as Joi from '@hapi/joi';
 
 import { BaseValidator } from './base.validator';
-
-import { CONTRACT_PREFIX, ACCOUNT_PREFIX } from '../../../constants/global.constans';
+import { ACCOUNT_PREFIX, CONTRACT_PREFIX } from '../../../constants/global.constans';
 
 export class ContractValidator extends BaseValidator {
 
@@ -40,6 +39,17 @@ export class ContractValidator extends BaseValidator {
 			constant: Joi.boolean(),
 			anonymous: Joi.boolean(),
 		})).min(1);
+	}
+
+	static updateContractSchema(): object {
+		return Joi.object().keys({
+			signature: Joi.string().required(),
+			message: Joi.string().required(),
+			accountId: ContractValidator.accountIdShema(),
+			name: ContractValidator.string(),
+			description: ContractValidator.string(),
+			icon: ContractValidator.string(),
+		});
 	}
 
 	static likedContractSchema(): object {

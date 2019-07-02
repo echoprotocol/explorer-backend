@@ -1,10 +1,18 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './modules/app.module';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import * as cors from 'cors';
 import * as config from 'config';
+import { join } from 'path';
+
+import { AppModule } from './modules/app.module';
+import { PATH_TO_PUBLIC } from './constants/global.constans';
 
 async function bootstrap() {
-	const app = await NestFactory.create(AppModule);
+	const app = await NestFactory.create<NestExpressApplication>(
+		AppModule,
+	);
+
+	app.useStaticAssets(join(__dirname, '..', PATH_TO_PUBLIC), { prefix: '/public/' });
 
 	if (config.cors) {
 		const corsOptions = {

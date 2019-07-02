@@ -1,4 +1,5 @@
 import echo from 'echojs-lib';
+
 import { TOKEN_ECHOJS } from '../../constants/global.constans';
 
 export const getEchojsProvider = (url) => {

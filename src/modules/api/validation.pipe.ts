@@ -10,9 +10,8 @@ class ValidationPipe implements PipeTransform {
 		this.schema = schema;
 	}
 
-	transform(value: any) {
-		const { error } = Joi.validate(value, this.schema, { abortEarly: false });
-
+	transform(value: any, metatype) {
+		const { error } = Joi.validate(value, this.schema[metatype.type], { abortEarly: false });
 		if (error) {
 			const details = error.details.map(({ message, path }) => ({
 				message,

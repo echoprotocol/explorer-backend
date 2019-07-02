@@ -2,6 +2,7 @@ import { Logger } from '@nestjs/common';
 import * as config from 'config';
 import * as Raven from 'raven';
 import { promisify } from 'util';
+
 import AbstractInitableHelper from './abstract.initable.services';
 
 export class RavenService extends AbstractInitableHelper {

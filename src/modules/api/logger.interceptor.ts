@@ -10,9 +10,7 @@ export class LoggerInterceptor implements NestInterceptor {
 	intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
 		const ctx = context.switchToHttp();
 		const request = ctx.getRequest();
-
 		this.traceRequest(request);
-
 		return next.handle();
 	}
 

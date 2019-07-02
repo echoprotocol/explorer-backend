@@ -1,11 +1,11 @@
 import { Injectable, Inject, NotFoundException, BadRequestException } from '@nestjs/common';
+import { Echo } from 'echojs-lib';
+
 import { ContractRepository } from '../repositories/contract.repository';
 import { LikedContractDto } from '../modules/api/dtos/contract.dtos';
-import { ED25519, PublicKey, Echo } from 'echojs-lib';
-import { TOKEN_ECHOJS } from '../constants/global.constans';
+import { TOKEN_ECHOJS, PATH_TO_ICONS, PATH_TO_PUBLIC } from '../constants/global.constans';
 import { IContractModel } from '../interfaces/contract.interfaces';
 import { ContractHelper } from '../helpers/contract.helper';
-
 import { GraphQLService } from './graphql.service';
 
 @Injectable()
@@ -16,6 +16,20 @@ export class ContractService {
 		private readonly contractHelper: ContractHelper,
 		private readonly graphqlService: GraphQLService,
 	) {}
+
+	async updateContract(contractId: string, file: Object, contractInfo: any): Promise<IContractModel> {
+		let contract = await this.contractRepository.findById(contractId);
+
+		if (!contract) {
+			contract = await this.contractRepository.create({ _id: contractId });
+		}
+
+		if (file) {
+			contractInfo.icon = `/${PATH_TO_PUBLIC}/${PATH_TO_ICONS}/${file['filename']}`;
+		}
+
+		return await this.contractRepository.findByIdAndUpdate(contractId, contractInfo, { lean: true, new: true });
+	}
 
 	async likeContract(likeContract: LikedContractDto) {
 		const { contractId, accountId } = likeContract;

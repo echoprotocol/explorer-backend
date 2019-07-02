@@ -1,5 +1,6 @@
 import { Module, Logger, ClassSerializerInterceptor } from '@nestjs/common';
 import { APP_INTERCEPTOR, APP_FILTER } from '@nestjs/core';
+import * as config from 'config';
 
 import ContractModel from '../../models/contract.model';
 
@@ -17,8 +18,6 @@ import { RavenService } from '../../services/raven.service';
 
 import { LoggerInterceptor } from './logger.interceptor';
 import { TransformInterceptor } from './transform.interceptor';
-
-import * as config from 'config';
 import { ApiExceptionFilter } from './exception.filter';
 import { EchojsModule } from '../echojs/echojs.module';
 
