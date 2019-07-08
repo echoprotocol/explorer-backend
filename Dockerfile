@@ -12,6 +12,7 @@ COPY ./config ./config
 COPY ./typing ./typing
 COPY ./tsconfig.build.json .
 COPY ./tsconfig.json .
+COPY ./public ./public
 
 EXPOSE 3000
 
