@@ -17,7 +17,7 @@ import { VerifySignatureInterceptor } from '../verify.signature.interceptor';
 import { VerifyContractOwnerInterceptor } from '../verify.contract.owner.interceptor';
 import { MulterService } from '../../../services/multer.service';
 
-@Controller('contracts')
+@Controller('api/contracts')
 export class ContractController {
 
 	constructor(
