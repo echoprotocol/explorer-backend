@@ -1,4 +1,5 @@
 {
+    "cors": true,
     "echodb": {
         "http_url": "https://645-echodb.pixelplex-test.by/graphql"
     },
