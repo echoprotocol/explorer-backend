@@ -8,7 +8,14 @@ export class LikedContractDto {
 export class VerifyContractDto {
 	id: string;
 	name: string;
-	compiler_version: string;
+	compiler_version: {
+		urls: [string];
+		path: string;
+		version: string;
+		build: string;
+		longVersion: string;
+		keccak256: string;
+	};
 	inputs: [{
 		arg: string;
 		type: string;

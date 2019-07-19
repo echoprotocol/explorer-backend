@@ -115,8 +115,11 @@ export class ContractService {
 
 		const { code } = await this.graphqlService.getContractCreateOperation(id);
 
+		const { version } = compiler_version;
+		const longVersion = `v${compiler_version.longVersion}`;
+
 		const solcVersion: solc = await new Promise((resolve, reject) => {
-			solc.loadRemoteVersion(compiler_version, (err: Error, solcVersion: solc) => {
+			solc.loadRemoteVersion(longVersion, (err: Error, solcVersion: solc) => {
 				if (err) {
 					reject(err);
 				} else {
@@ -160,20 +163,23 @@ export class ContractService {
 			},
 		} = output;
 
-		if (!code.includes(bytecode)) {
+		const compiledBytecode = this.contractHelper.processBytecode(version, bytecode);
+		const deployedBytecode = this.contractHelper.processBytecode(version, code);
+
+		if (compiledBytecode !== deployedBytecode) {
 			throw new BadRequestException('Invalid source code or compiler version');
 		}
 
 		const args = parseInputs(inputs);
 
-		if (`${bytecode}${args}` !== code) {
+		if (!code.includes(args)) {
 			throw new BadRequestException('Invalid constructor arguments');
 		}
 
 		return await this.contractRepository.findByIdAndUpdate(id, {
 			abi,
-			compiler_version,
 			source_code,
+			compiler_version: longVersion,
 			verified: true,
 		}, { lean: true, new: true });
 

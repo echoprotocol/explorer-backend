@@ -76,7 +76,7 @@ export class ContractController {
 			id: ContractValidator.contractIdSchema(),
 			name: ContractValidator.string().required(),
 			inputs: ContractValidator.contractInputsSchema(),
-			compiler_version: ContractValidator.string().required(),
+			compiler_version: ContractValidator.contractCompilerVersion(),
 			source_code: ContractValidator.string().required(),
 		},
 	}))

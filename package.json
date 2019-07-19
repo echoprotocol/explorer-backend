@@ -29,7 +29,7 @@
     "class-transformer": "^0.2.3",
     "config": "^3.1.0",
     "cors": "^2.8.5",
-    "echojs-contract": "^0.4.7",
+    "echojs-contract": "^0.4.9",
     "echojs-lib": "^1.1.13",
     "graphql": "^14.3.1",
     "graphql-tag": "^2.10.1",

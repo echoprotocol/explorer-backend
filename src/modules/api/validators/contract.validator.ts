@@ -68,4 +68,15 @@ export class ContractValidator extends BaseValidator {
 		});
 	}
 
+	static contractCompilerVersion(): object {
+		return Joi.object().keys({
+			path: Joi.string().required(),
+			version: Joi.string().required(),
+			build: Joi.string().required(),
+			longVersion: Joi.string().required(),
+			keccak256: Joi.string().required(),
+			urls: Joi.array(),
+		});
+	}
+
 }
