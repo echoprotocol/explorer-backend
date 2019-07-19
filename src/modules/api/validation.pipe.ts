@@ -1,4 +1,4 @@
-import * as Joi from 'joi';
+import * as Joi from '@hapi/joi';
 import { PipeTransform } from '@nestjs/common';
 
 import ValidationError from '../../errors/validation.error';
