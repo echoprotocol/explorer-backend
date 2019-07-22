@@ -26,11 +26,14 @@
     "@nestjs/mongoose": "^6.1.2",
     "@nestjs/platform-express": "^6.0.0",
     "apollo-boost": "^0.4.2",
+    "canvas": "^2.5.0",
+    "canvg": "^2.0.0",
     "class-transformer": "^0.2.3",
     "config": "^3.1.0",
     "cors": "^2.8.5",
     "echojs-contract": "^0.4.9",
     "echojs-lib": "^1.1.13",
+    "echojs-ping": "^0.1.5",
     "graphql": "^14.3.1",
     "graphql-tag": "^2.10.1",
     "husky": "^2.4.1",
@@ -42,7 +45,9 @@
     "reflect-metadata": "^0.1.12",
     "rimraf": "^2.6.2",
     "rxjs": "^6.3.3",
-    "solc": "^0.5.9"
+    "solc": "^0.5.9",
+    "svgdom": "0.0.20",
+    "xmldom": "^0.1.27"
   },
   "devDependencies": {
     "@nestjs/testing": "^6.0.0",

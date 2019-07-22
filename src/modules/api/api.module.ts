@@ -1,10 +1,10 @@
-import { Module, Logger, ClassSerializerInterceptor } from '@nestjs/common';
-import { APP_INTERCEPTOR, APP_FILTER } from '@nestjs/core';
-import * as config from 'config';
+import { ClassSerializerInterceptor, Logger, Module } from '@nestjs/common';
+import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 
 import ContractModel from '../../models/contract.model';
 
 import { ContractController } from './controllers/contract.controller';
+import { AccountController } from './controllers/account.controller';
 
 import { ContractRepository } from '../../repositories/contract.repository';
 
@@ -13,6 +13,7 @@ import { ContractHelper } from '../../helpers/contract.helper';
 import { ContractSerializer } from '../../serializers/contract.serializer';
 
 import { ContractService } from '../../services/contract.service';
+import { AccountService } from '../../services/account.service';
 import { GraphQLService } from '../../services/graphql.service';
 import { RavenService } from '../../services/raven.service';
 
@@ -26,6 +27,7 @@ import { ApiExceptionFilter } from './exception.filter';
 	],
 	controllers: [
 		ContractController,
+		AccountController,
 	],
 	providers: [
 		ContractRepository,
@@ -33,6 +35,7 @@ import { ApiExceptionFilter } from './exception.filter';
 		ContractHelper,
 
 		ContractService,
+		AccountService,
 		GraphQLService,
 		RavenService,
 
