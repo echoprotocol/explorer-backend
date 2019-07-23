@@ -14,7 +14,7 @@ services:
       - mongodb:/data/db
 
   explorer.backend.api:
-    build: .
+    image: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
     environment:
       - NODE_APP_INSTANCE=$NODE_APP_INSTANCE
       - DB_URL=mongodb://explorer.mongodb:27017/explorer
