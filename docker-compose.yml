@@ -19,6 +19,8 @@ services:
       - NODE_APP_INSTANCE=$NODE_APP_INSTANCE
       - DB_URL=mongodb://explorer.mongodb:27017/explorer
     restart: always
+    volumes:
+      - ./public:/app/public
     depends_on:
       - explorer.mongodb
     ports:
