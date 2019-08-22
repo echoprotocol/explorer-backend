@@ -9,12 +9,21 @@ import { FileInterceptor } from '@nestjs/platform-express';
 
 import { ContractValidator } from '../validators/contract.validator';
 import { setValidationPipe } from '../validation.pipe';
+
+import {
+	LikedContractDto,
+	SetContractAbiDto,
+	VerifyContractDto,
+	SearchContractsDto,
+} from '../dtos/contract.dtos';
+
 import { IContractSerializer } from '../../../interfaces/contract.interfaces';
-import { ContractService } from '../../../services/contract.service';
-import { LikedContractDto, SetContractAbiDto, VerifyContractDto } from '../dtos/contract.dtos';
 import { ContractSerializer } from '../../../serializers/contract.serializer';
+
 import { VerifySignatureInterceptor } from '../verify.signature.interceptor';
 import { VerifyContractOwnerInterceptor } from '../verify.contract.owner.interceptor';
+
+import { ContractService } from '../../../services/contract.service';
 import { MulterService } from '../../../services/multer.service';
 
 @Controller('api/contracts')
@@ -85,6 +94,21 @@ export class ContractController {
 	}: VerifyContractDto): Promise<IContractSerializer<ContractSerializer>> {
 		const contract = await this.contractService.verifyContract(source_code, id, name, compiler_version, inputs);
 		return new ContractSerializer(contract);
+	}
+
+	@Post('search')
+	@UsePipes(setValidationPipe({
+		body: {
+			name: ContractValidator.string(),
+			offset: ContractValidator.number(),
+			limit: ContractValidator.number(),
+		},
+	}))
+	async searchContracts(@Body() {
+		name, offset, limit,
+	}: SearchContractsDto): Promise<[IContractSerializer<ContractSerializer>]> {
+		const contracts = await this.contractService.searchContracts(name, offset, limit);
+		return contracts.map((contract) => new ContractSerializer(contract));
 	}
 
 }

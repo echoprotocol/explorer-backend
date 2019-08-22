@@ -184,4 +184,13 @@ export class ContractService {
 		}, { lean: true, new: true });
 
 	}
+
+	searchContracts(name: string, offset?: number, limit?: number) {
+		return this.contractRepository.find(
+			{ name: { $regex: new RegExp(`^${name}`, 'i') } },
+			null,
+			{ limit, skip: offset, lean: true },
+		);
+	}
+
 }

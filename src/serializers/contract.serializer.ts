@@ -5,6 +5,7 @@ import { IContractSerializer } from '../interfaces/contract.interfaces';
 export class ContractSerializer implements IContractSerializer<ContractSerializer> {
 	@Exclude()
 	_id: string;
+	id: string;
 	name: string;
 	description: string;
 	icon: string;
@@ -24,6 +25,11 @@ export class ContractSerializer implements IContractSerializer<ContractSerialize
   	updatedAt: object;
 
 	constructor(partial: Partial<ContractSerializer>) {
+
+		if (partial) {
+			this.id = partial._id;
+		}
+
 		Object.assign(this, partial);
 	}
 

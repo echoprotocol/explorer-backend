@@ -51,3 +51,9 @@ export class SetContractAbiDto {
 		anonymous: boolean;
 	}];
 }
+
+export class SearchContractsDto {
+	name: string;
+	offset?: number;
+	limit?: number;
+}
