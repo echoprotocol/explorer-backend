@@ -6,14 +6,14 @@
 	"logger": {
 		"level": "trace"
 	},
-	"port": 3000,
+	"port": 26563,
 	"raven": {
 		"enabled": false,
 		"config": ""
 	},
 	"sessionSecret": "KB}3S}QBh]",
 	"echodb": {
-        "http_url": "https://645-echodb.pixelplexlabs.com/graphql"
+        "http_url": "http://localhost:3000/graphql"
     },
     "url": "wss://testnet.echo-dev.io/ws"
 }

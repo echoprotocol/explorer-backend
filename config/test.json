@@ -2,5 +2,5 @@
 	"logger": {
 		"level": "error"
 	},
-	"port": 3000
+	"port": 26563
 }

@@ -1,9 +1,11 @@
 {
-  "name": "server",
+  "name": "explorer-server",
+  "author": "PixelPlex, Inc. <info@pixelplex.by>",
+  "description": "Server for Echo Explorer",
+  "homepage": "https://github.com/echoprotocol/explorer-server",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
   "license": "MIT",
+  "main": "main.ts",
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "format": "prettier --write \"src/**/*.ts\"",
@@ -90,5 +92,12 @@
     "hooks": {
       "pre-commit": "npm run lint"
     }
+  },
+  "repository": {
+	"type": "git",
+	"url": "https://github.com/echoprotocol/explorer-server.git"
+  },
+  "bugs": {
+	"url": "https://github.com/echoprotocol/explorer-server/issues"
   }
 }

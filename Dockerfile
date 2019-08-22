@@ -13,6 +13,6 @@ COPY ./typing ./typing
 COPY ./tsconfig.build.json .
 COPY ./tsconfig.json .
 
-EXPOSE 3000
+EXPOSE 26563
 
 CMD ["npm", "run", "start:prod"]
