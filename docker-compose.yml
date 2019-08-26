@@ -3,7 +3,7 @@ version: '3'
 services:
 
   explorer.mongodb:
-    image: mongo:latest
+    image: mongo:4.0
     command: mongod --smallfiles
     hostname: mongodb
     logging:
