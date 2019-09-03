@@ -9,7 +9,7 @@ services:
     logging:
       driver: none
     ports:
-      - 127.0.0.1:26567:27017
+      - 127.0.0.1:$EXTERNAL_MONGO_PORT:27017
     volumes:
       - mongodb:/data/db
 
@@ -24,7 +24,7 @@ services:
     depends_on:
       - explorer.mongodb
     ports:
-      - 26563:26563
+      - $EXTERNAL_PORT:26563
 
 volumes:
   mongodb:
