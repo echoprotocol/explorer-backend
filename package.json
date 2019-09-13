@@ -39,7 +39,7 @@
     "config": "^3.1.0",
     "cors": "^2.8.5",
     "echojs-contract": "^0.4.9",
-    "echojs-lib": "^1.6.0-rc.3",
+    "echojs-lib": "1.6.0",
     "echojs-ping": "^0.1.5",
     "graphql": "^14.3.1",
     "graphql-tag": "^2.10.1",
@@ -98,10 +98,10 @@
     }
   },
   "repository": {
-	"type": "git",
-	"url": "https://github.com/echoprotocol/explorer-server.git"
+    "type": "git",
+    "url": "https://github.com/echoprotocol/explorer-server.git"
   },
   "bugs": {
-	"url": "https://github.com/echoprotocol/explorer-server/issues"
+    "url": "https://github.com/echoprotocol/explorer-server/issues"
   }
 }
