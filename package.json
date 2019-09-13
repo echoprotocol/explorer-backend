@@ -1,6 +1,10 @@
 {
   "name": "explorer-server",
-  "author": "PixelPlex, Inc. <info@pixelplex.by>",
+  "author": {
+    "name": "PixelPlex, Inc.",
+    "email": "info@pixelplex.io",
+    "url": "https://pixelplex.io"
+  },
   "description": "Server for Echo Explorer",
   "homepage": "https://github.com/echoprotocol/explorer-server",
   "version": "0.0.1",

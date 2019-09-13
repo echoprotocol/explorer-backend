@@ -154,7 +154,9 @@ $ npm run test:cov
 
 The MIT License (MIT)
 
-Copyright (c) Echo Technological Solutions LLC
+Copyright (c) 2017-2019 Kamil Myśliwiec <http://kamilmysliwiec.com>
+
+Copyright (c) 2019 Echo Technological Solutions LLC
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
