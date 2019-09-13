@@ -1,6 +1,6 @@
 # Reporting Security Issues
 
-The Echo team takes security errors at Echo Explorer seriously. We
+The Echo team takes security errors at `explorer-backend` seriously. We
 appreciate your efforts and will make every effort to recognize your
 contribution.
 
