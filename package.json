@@ -7,7 +7,7 @@
   },
   "description": "Server for Echo Explorer",
   "homepage": "https://github.com/echoprotocol/explorer-server",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "main": "main.ts",
   "scripts": {
