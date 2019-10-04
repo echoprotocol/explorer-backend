@@ -1,1 +1,7 @@
-{}
+{
+  "cors": true,
+  "echodb": {
+    "http_url": "https://645-echodb.pixelplexlabs.com/graphql"
+  },
+  "url": "wss://testnet.echo-dev.io/ws"
+}
