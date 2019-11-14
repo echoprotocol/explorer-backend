@@ -7,7 +7,7 @@
   },
   "description": "Server for Echo Explorer",
   "homepage": "https://github.com/echoprotocol/explorer-server",
-  "version": "1.0.2",
+  "version": "1.2.0",
   "license": "MIT",
   "main": "main.ts",
   "scripts": {
@@ -39,7 +39,7 @@
     "config": "^3.1.0",
     "cors": "^2.8.5",
     "echojs-contract": "^0.4.9",
-    "echojs-lib": "^1.8.1-rc.2",
+    "echojs-lib": "^1.9.1-echo.13-rc.1",
     "echojs-ping": "^0.1.5",
     "graphql": "^14.3.1",
     "graphql-tag": "^2.10.1",
