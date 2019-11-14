@@ -72,7 +72,7 @@ export class ContractValidator extends BaseValidator {
 		return Joi.object().keys({
 			path: Joi.string().required(),
 			version: Joi.string().required(),
-			build: Joi.string().required(),
+			build: Joi.string(),
 			longVersion: Joi.string().required(),
 			keccak256: Joi.string().required(),
 			urls: Joi.array(),

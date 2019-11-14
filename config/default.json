@@ -15,5 +15,7 @@
 	"echodb": {
         "http_url": "http://localhost:3000/graphql"
     },
-    "url": "wss://testnet.echo-dev.io/ws"
+	"url": "wss://testnet.echo-dev.io/ws",
+	"solcListUrl": "https://echoprotocol.github.io/solc-bin/bin/list.json",
+	"solcBinUrl": "  https://echoprotocol.github.io/solc-bin/bin/"
 }

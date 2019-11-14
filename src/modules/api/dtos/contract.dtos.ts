@@ -11,7 +11,7 @@ export class VerifyContractDto {
 	compiler_version: {
 		urls: [string];
 		path: string;
-		version: string;
+		version?: string;
 		build: string;
 		longVersion: string;
 		keccak256: string;

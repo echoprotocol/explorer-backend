@@ -2,6 +2,9 @@ import { Injectable, Inject, NotFoundException, BadRequestException } from '@nes
 import { parseInputs } from 'echojs-contract';
 import { Echo } from 'echojs-lib';
 import * as solc from 'solc';
+import * as https from 'https';
+import { createWriteStream, pathExists, ensureDir, unlink } from 'fs-extra';
+import * as config from 'config';
 
 import { TOKEN_ECHOJS, PATH_TO_ICONS, PATH_TO_PUBLIC } from '../constants/global.constans';
 import { IContractModel } from '../interfaces/contract.interfaces';
@@ -35,6 +38,29 @@ export class ContractService {
 		}
 
 		return await this.contractRepository.findByIdAndUpdate(contractId, contractInfo, { lean: true, new: true });
+	}
+
+	async loadSolcBinary(fileName, url) {
+		await ensureDir('solc-bins');
+
+		if (await pathExists(`./solc-bins/${fileName}`)) {
+			return fileName;
+		}
+
+		const file = createWriteStream(`./solc-bins/${fileName}`);
+
+		return new Promise((res, rej) => {
+			https.get(url, (response) => {
+				response.pipe(file);
+				file.on('close', () => {
+					file.close();
+					res(fileName);
+				});
+			  }).on('error', async (err) => {
+				await unlink(fileName);
+				return rej(err.message);
+			  });
+		});
 	}
 
 	async likeContract(likeContract: LikedContractDto) {
@@ -115,18 +141,16 @@ export class ContractService {
 
 		const { code } = await this.graphqlService.getContractCreateOperation(id);
 
-		const { version } = compiler_version;
+		const { version, path } = compiler_version;
 		const longVersion = `v${compiler_version.longVersion}`;
 
-		const solcVersion: solc = await new Promise((resolve, reject) => {
-			solc.loadRemoteVersion(longVersion, (err: Error, solcVersion: solc) => {
-				if (err) {
-					reject(err);
-				} else {
-					resolve(solcVersion);
-				}
-			});
-		});
+		try {
+			await this.loadSolcBinary(path, `${config.solcBinUrl}${compiler_version.path}`);
+		} catch (error) {
+			throw new BadRequestException('Current solidity compiler cannot be downloaded');
+		}
+
+		const solcVersion = solc.setupMethods(require(`../../solc-bins/${path}`));
 
 		const output = JSON.parse(solcVersion.compile(JSON.stringify({
 			language: 'Solidity',

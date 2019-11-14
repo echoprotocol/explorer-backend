@@ -2,5 +2,7 @@
     "dbUrl": "DB_URL",
     "env": "NODE_ENV",
     "port": "PORT",
-    "sessionSecret": "APP_SESSION_SECRET"
+    "sessionSecret": "APP_SESSION_SECRET",
+    "solcListUrl": "SOLC_LIST_URL",
+    "solcBinUrl": "SOLC_BIN_URL"
 }
