@@ -40,7 +40,7 @@
     "config": "^3.1.0",
     "cors": "^2.8.5",
     "echojs-contract": "^0.4.9",
-    "echojs-lib": "^1.9.1-echo.13-rc.1",
+    "echojs-lib": "1.9.1-echo.13-rc.1",
     "echojs-ping": "^0.1.5",
     "fs-extra": "^8.1.0",
     "graphql": "^14.3.1",
