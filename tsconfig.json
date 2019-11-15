@@ -11,6 +11,7 @@
     "baseUrl": "./",
     "typeRoots": ["./typing", "./node_modules/@types"],
     "incremental": true,
+    "skipLibCheck": true,
     "paths": {
       "echojs-lib": ["node_modules/echojs-lib"]
     }
