@@ -12,6 +12,7 @@ services:
       - 127.0.0.1:$EXTERNAL_MONGO_PORT:27017
     volumes:
       - mongodb:/data/db
+    restart: always
 
   explorer.backend.api:
     image: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
