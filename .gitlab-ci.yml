@@ -30,7 +30,7 @@ build.master:
     EXTERNAL_PORT: 36563
   script:
     - docker build --cache-from $CI_REGISTRY_IMAGE:latest --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA .
-    - docker-compose -p 656-echo-explorer-backend-develop up -d
+    - docker-compose -p 656-echo-explorer-backend-master up -d
   only:
     - master
   tags:
