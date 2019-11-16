@@ -5,6 +5,7 @@ import ContractModel from '../../models/contract.model';
 
 import { ContractController } from './controllers/contract.controller';
 import { AccountController } from './controllers/account.controller';
+import { NetworkController } from './controllers/network.controller';
 
 import { ContractRepository } from '../../repositories/contract.repository';
 
@@ -16,6 +17,7 @@ import { ContractService } from '../../services/contract.service';
 import { AccountService } from '../../services/account.service';
 import { GraphQLService } from '../../services/graphql.service';
 import { RavenService } from '../../services/raven.service';
+import { NetworkService } from '../../services/network.service';
 
 import { LoggerInterceptor } from './logger.interceptor';
 import { TransformInterceptor } from './transform.interceptor';
@@ -28,6 +30,7 @@ import { ApiExceptionFilter } from './exception.filter';
 	controllers: [
 		ContractController,
 		AccountController,
+		NetworkController,
 	],
 	providers: [
 		ContractRepository,
@@ -38,6 +41,7 @@ import { ApiExceptionFilter } from './exception.filter';
 		AccountService,
 		GraphQLService,
 		RavenService,
+		NetworkService,
 
 		{
 			provide: 'IContractSerializer',
