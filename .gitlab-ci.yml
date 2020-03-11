@@ -13,6 +13,7 @@ lint:
   script:
     - npm i --silent
     - npm run lint
+    - npm run test
   only:
     - merge_requests
   tags:
@@ -34,7 +35,6 @@ build-branch:
   extends: .build
   only:
     - develop
-    - EEX-772
 
 build-stage:
   variables:
