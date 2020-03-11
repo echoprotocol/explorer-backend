@@ -63,8 +63,6 @@ develop:
   variables:
     NODE_ENV: production
     NODE_APP_INSTANCE: develop
-    EXTERNAL_MONGO_PORT: 26567
-    EXTERNAL_PORT: 26563
   environment:
     name: develop
     url: https://656-echo-explorer.pixelplex-test.by
@@ -78,8 +76,6 @@ stage-deploy:
   variables:
     NODE_ENV: production
     NODE_APP_INSTANCE: master
-    EXTERNAL_MONGO_PORT: 36567
-    EXTERNAL_PORT: 36563
   environment:
     name: master
     url: http://656-echo-explorer.pixelplexlabs.com
@@ -93,8 +89,6 @@ production-deploy:
   variables:
     NODE_ENV: production
     NODE_APP_INSTANCE: prod
-    EXTERNAL_MONGO_PORT: 26567
-    EXTERNAL_PORT: 26563
   environment:
     name: prod
     url: https://explorer.echo-dev.io
