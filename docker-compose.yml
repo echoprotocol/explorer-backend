@@ -15,7 +15,7 @@ services:
     restart: always
 
   explorer.backend.api:
-    image: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+    image: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
     environment:
       - NODE_APP_INSTANCE=$NODE_APP_INSTANCE
       - DB_URL=mongodb://explorer.mongodb:27017/explorer
