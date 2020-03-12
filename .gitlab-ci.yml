@@ -8,7 +8,7 @@ include:
     ref: master
     file: '.gitlab-ci.yml'  
 
-lint:
+test:
   image: node:10.15
   stage: test
   cache:
