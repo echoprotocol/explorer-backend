@@ -59,7 +59,6 @@ stage-deploy:
 production-deploy:
   extends: .deploy
   variables:
-    NODE_ENV: production
     NODE_APP_INSTANCE: prod
   environment:
     name: prod
