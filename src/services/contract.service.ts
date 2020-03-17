@@ -5,6 +5,8 @@ import * as solc from 'solc';
 import * as https from 'https';
 import { createWriteStream, pathExists, ensureDir, unlink } from 'fs-extra';
 import * as config from 'config';
+import * as fs from 'fs';
+import { join } from 'path';
 
 import { TOKEN_ECHOJS, PATH_TO_ICONS, PATH_TO_PUBLIC } from '../constants/global.constans';
 import { IContractModel } from '../interfaces/contract.interfaces';
@@ -27,7 +29,7 @@ export class ContractService {
 	}
 
 	async updateContract(contractId: string, file: Object, contractInfo: any): Promise<IContractModel> {
-		let contract = await this.contractRepository.findById(contractId);
+		let contract = await this.contractRepository.findContractById(contractId);
 
 		if (!contract) {
 			contract = await this.contractRepository.create({ _id: contractId });
@@ -35,6 +37,12 @@ export class ContractService {
 
 		if (file) {
 			contractInfo.icon = `/${PATH_TO_PUBLIC}/${PATH_TO_ICONS}/${file['filename']}`;
+		} else {
+			const fullPathToIcon = join(__dirname, '../..', contract.icon);
+			if (contract.icon && fs.existsSync(fullPathToIcon)) {
+				const resultDeleteFile = fs.unlinkSync(fullPathToIcon);
+			}
+			contractInfo.icon = '';
 		}
 
 		return await this.contractRepository.findByIdAndUpdate(contractId, contractInfo, { lean: true, new: true });
