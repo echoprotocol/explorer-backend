@@ -32,7 +32,7 @@ include:
     - docker-compose pull
     - docker-compose -p 656-echo-explorer-backend up -d
 
-develop:
+develop-deploy:
   extends: .deploy
   variables:
     NODE_APP_INSTANCE: develop
