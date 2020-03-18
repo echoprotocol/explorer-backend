@@ -41,7 +41,7 @@ export class ContractService {
 		if (file) {
 			contractInfo.icon = `/${PATH_TO_PUBLIC}/${PATH_TO_ICONS}/${file['filename']}`;
 		} else {
-			const fullPathToIcon = join(__dirname, '../..', contract.icon);
+			const fullPathToIcon = 	`${process.env.PWD}/${contract.icon}`;
 			let isNotExistFile = false;
 			try {
 				await accessFileAsync(fullPathToIcon, fs.constants.F_OK);

@@ -2,7 +2,6 @@ import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import * as cors from 'cors';
 import * as config from 'config';
-import { join } from 'path';
 
 import { AppModule } from './modules/app.module';
 import { PATH_TO_PUBLIC } from './constants/global.constans';
@@ -12,7 +11,7 @@ async function bootstrap() {
 		AppModule,
 	);
 
-	app.useStaticAssets(join(__dirname, '..', PATH_TO_PUBLIC), { prefix: '/public/' });
+	app.useStaticAssets(`${process.env.PWD}/${PATH_TO_PUBLIC}`, { prefix: '/public/' });
 
 	if (config.cors) {
 		const corsOptions = {
