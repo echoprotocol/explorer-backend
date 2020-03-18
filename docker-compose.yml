@@ -2,7 +2,7 @@ version: '3'
 
 services:
 
-  explorer.mongodb:
+  mongodb:
     image: mongo:4.0
     command: mongod --smallfiles
     hostname: mongodb
@@ -14,17 +14,16 @@ services:
       - mongodb:/data/db
     restart: always
 
-  explorer.backend.api:
+  backend.api:
     image: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
     environment:
-      - NODE_ENV=production
       - NODE_APP_INSTANCE=$NODE_APP_INSTANCE
-      - DB_URL=mongodb://explorer.mongodb:27017/explorer
+      - DB_URL=mongodb://mongodb:27017/explorer
     restart: always
     volumes:
       - ./public:/app/public
     depends_on:
-      - explorer.mongodb
+      - mongodb
     ports:
       - 26563:26563
 
