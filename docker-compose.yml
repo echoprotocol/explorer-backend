@@ -14,7 +14,7 @@ services:
       - mongodb:/data/db
     restart: always
 
-  backend.api:
+  backend:
     image: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
     environment:
       - NODE_ENV=production
