@@ -2,30 +2,31 @@ version: '3'
 
 services:
 
-  explorer.mongodb:
+  mongodb:
     image: mongo:4.0
     command: mongod --smallfiles
     hostname: mongodb
     logging:
       driver: none
     ports:
-      - 127.0.0.1:$EXTERNAL_MONGO_PORT:27017
+      - 127.0.0.1:26567:27017
     volumes:
       - mongodb:/data/db
     restart: always
 
-  explorer.backend.api:
-    image: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+  backend:
+    image: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
     environment:
+      - NODE_ENV=production
       - NODE_APP_INSTANCE=$NODE_APP_INSTANCE
-      - DB_URL=mongodb://explorer.mongodb:27017/explorer
+      - DB_URL=mongodb://mongodb:27017/explorer
     restart: always
     volumes:
       - ./public:/app/public
     depends_on:
-      - explorer.mongodb
+      - mongodb
     ports:
-      - $EXTERNAL_PORT:26563
+      - 26563:26563
 
 volumes:
   mongodb:

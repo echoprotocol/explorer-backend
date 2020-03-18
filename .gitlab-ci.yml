@@ -3,83 +3,67 @@ stages:
   - build
   - deploy
 
+test:
+  image: node:10.15
+  stage: test
+  cache:
+    key: $CI_COMMIT_REF_NAME
+    paths:
+      - node_modules/
+  script:
+    - npm i --silent
+    - npm run lint
+    - npm run test
+  only:
+    - merge_requests
+  tags:
+    - docker
 
-build.develop:
-  stage: build
+include:
+  - project: 'service/devops'
+    ref: master
+    file: 'build/backend/.gitlab-ci.yml'  
+
+.deploy:
+  stage: deploy
+  before_script:
+      - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - docker-compose pull
+    - docker-compose -p 656-echo-explorer-backend up -d
+
+develop-deploy:
+  extends: .deploy
   variables:
     NODE_APP_INSTANCE: develop
-    EXTERNAL_MONGO_PORT: 26567
-    EXTERNAL_PORT: 26563
-  script:
-    - docker build --cache-from $CI_REGISTRY_IMAGE:latest --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA .
-    - docker-compose -p 656-echo-explorer-backend-develop up -d
-  only:
-    - develop
-  tags:
-    - echo-linux
   environment:
     name: develop
     url: https://656-echo-explorer.pixelplex-test.by
+  only:
+    - develop
+  tags:
+    - pp-new-develop
 
-
-build.master:
-  stage: build
+stage-deploy:
+  extends: .deploy
   variables:
     NODE_APP_INSTANCE: master
-    EXTERNAL_MONGO_PORT: 36567
-    EXTERNAL_PORT: 36563
-  script:
-    - docker build --cache-from $CI_REGISTRY_IMAGE:latest --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA .
-    - docker-compose -p 656-echo-explorer-backend-master up -d
+  environment:
+    name: master
+    url: http://656-echo-explorer.pixelplexlabs.com
   only:
     - master
   tags:
-    - echo-linux
-  environment:
-    name: master
-    url: https://656-echo-explorer.pixelplexlabs.com
+    - pp-stage
 
-
-build.production:
-  stage: build
+production-deploy:
+  extends: .deploy
   variables:
-    NODE_APP_INSTANCE: production
-  before_script:
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-  script:
-    - docker build --cache-from $CI_REGISTRY_IMAGE:latest --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA --tag $CI_REGISTRY_IMAGE:latest .
-    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
-    - docker push $CI_REGISTRY_IMAGE:latest
-  after_script:
-    - docker logout $CI_REGISTRY
-  only:
-    - tags
-  tags:
-    - echo-linux
+    NODE_APP_INSTANCE: prod
   environment:
-    name: production
+    name: prod
     url: https://explorer.echo-dev.io
-
-
-deploy.production:
-  stage: deploy
-  variables:
-    NODE_ENV: production
-    NODE_APP_INSTANCE: production
-    EXTERNAL_MONGO_PORT: 26567
-    EXTERNAL_PORT: 26563
-  before_script:
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-  script:
-    - docker pull $CI_REGISTRY_IMAGE:latest
-    - docker-compose -p 656 up -d
-  after_script:
-    - docker logout $CI_REGISTRY
   only:
     - tags
   tags:
     - echo-explorer-1
-  when: manual
-  environment:
-    name: production
-    url: https://explorer.echo-dev.io
