@@ -6,7 +6,10 @@ import * as https from 'https';
 import { createWriteStream, pathExists, ensureDir, unlink } from 'fs-extra';
 import * as config from 'config';
 import * as fs from 'fs';
+import { promisify } from 'util';
 import { join } from 'path';
+const accessFileAsync = promisify(fs.access);
+const unlinkFileAsync = promisify(fs.unlink);
 
 import { TOKEN_ECHOJS, PATH_TO_ICONS, PATH_TO_PUBLIC } from '../constants/global.constans';
 import { IContractModel } from '../interfaces/contract.interfaces';
@@ -39,8 +42,15 @@ export class ContractService {
 			contractInfo.icon = `/${PATH_TO_PUBLIC}/${PATH_TO_ICONS}/${file['filename']}`;
 		} else {
 			const fullPathToIcon = join(__dirname, '../..', contract.icon);
-			if (contract.icon && fs.existsSync(fullPathToIcon)) {
-				const resultDeleteFile = fs.unlinkSync(fullPathToIcon);
+			let isNotExistFile = false;
+			try {
+				await accessFileAsync(fullPathToIcon, fs.constants.F_OK);
+			} catch (e) {
+				isNotExistFile = true;
+			}
+
+			if (contract.icon && !isNotExistFile) {
+				const resultDeleteFile = await unlinkFileAsync(fullPathToIcon);
 			}
 			contractInfo.icon = '';
 		}
