@@ -36,7 +36,7 @@
     "apollo-boost": "^0.4.4",
     "canvas": "^2.5.0",
     "canvg": "^2.0.0",
-    "class-transformer": "^0.2.3",
+    "class-transformer": "^0.3.1",
     "config": "^3.1.0",
     "cors": "^2.8.5",
     "echojs-contract": "^0.4.9",
